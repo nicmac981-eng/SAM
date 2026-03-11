@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAM.BETA.IA</title>
+    <title>SAM.IA</title>
     <style>
-        /* Colores pastel */
         :root {
             --pastel-pink: #f5c0e6;
             --pastel-blue: #fc00b0;
@@ -92,6 +91,17 @@
         .chat-input button:hover {
             opacity: 0.9;
         }
+
+        .link-button {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .link-button a {
+            color: var(--pastel-blue);
+            font-weight: bold;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -102,11 +112,17 @@
             <input type="text" id="userInput" placeholder="Escribe aquí..." />
             <button onclick="sendMessage()">Enviar</button>
         </div>
+        <div class="link-button">
+            <a href="percentil.html" target="_blank">Ver Percentil de Palabras</a>
+        </div>
     </div>
 
     <script>
         const messages = document.getElementById("messages");
         const userInput = document.getElementById("userInput");
+
+        // Guardar mensajes en localStorage para usar en la otra página
+        const chatStorageKey = "chatMessages";
 
         function addMessage(text, className) {
             const msg = document.createElement("div");
@@ -123,13 +139,17 @@
             addMessage(text, "user");
             userInput.value = "";
 
+            // Guardar en localStorage
+            let savedMessages = JSON.parse(localStorage.getItem(chatStorageKey)) || [];
+            savedMessages.push(text);
+            localStorage.setItem(chatStorageKey, JSON.stringify(savedMessages));
+
             // Simular respuesta de la IA
             setTimeout(() => {
                 addMessage("SAM: He recibido tu mensaje \"" + text + "\"", "ai");
             }, 800);
         }
 
-        // Permitir enviar con Enter
         userInput.addEventListener("keypress", function(e) {
             if (e.key === "Enter") sendMessage();
         });
