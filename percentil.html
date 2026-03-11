@@ -87,6 +87,8 @@ window.addEventListener('storage', actualizarPercentil);
 
 // También refrescar cada segundo por seguridad
 setInterval(actualizarPercentil, 1000);
+localStorage.removeItem("chatMessages");
 </script>
 </body>
 </html>
+
